@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tu Salud es Primero — FisioSmart EC</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0F2D5C;
+  --azul-mid: #1B4F8A;
+  --acento: #00C896;
+  --acento-dark: #00A07A;
+  --acento-claro: #D0F7EE;
+  --naranja: #FF6B35;
+  --gris: #F5F7FA;
+  --gris-mid: #E2E8F0;
+  --gris-texto: #64748B;
+  --dark: #0F172A;
+  --white: #FFFFFF;
+  --radius: 16px;
+  --shadow: 0 8px 32px rgba(15,45,92,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #0F2D5C;
+  min-height: 100vh;
+  color: var(--dark);
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(145deg, #0F2D5C 0%, #1B4F8A 60%, #0F2D5C 100%);
+  padding: 40px 24px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,200,150,0.15) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(0,200,150,0.10) 0%, transparent 70%);
+  bottom: -80px; left: -60px;
+  pointer-events: none;
+}
+.hero-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
+  padding: 8px 18px;
+  border-radius: 40px;
+  margin-bottom: 28px;
+}
+.hero-logo span {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.90);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(26px, 6vw, 42px);
+  font-weight: 800;
+  color: white;
+  line-height: 1.15;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--acento);
+}
+.hero p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+  max-width: 420px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+.promo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--naranja), #FF9500);
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 40px;
+  box-shadow: 0 4px 20px rgba(255,107,53,0.40);
+  position: relative;
+  z-index: 1;
+  animation: pulse-badge 2.5s ease-in-out infinite;
+}
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+/* ── WAVE ── */
+.wave {
+  display: block;
+  background: #0F2D5C;
+  line-height: 0;
+}
+.wave svg { display: block; width: 100%; }
+
+/* ── MAIN ── */
+.main {
+  background: var(--gris);
+  padding: 8px 16px 100px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  background: white;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gris-texto);
+  margin-bottom: 10px;
+}
+.progress-label .step-name { color: var(--azul-mid); font-weight: 700; }
+.progress-bar-bg {
+  height: 6px;
+  background: var(--gris-mid);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--acento), #00E5AA);
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+/* ── CARD ── */
+.card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px 20px 20px;
+  margin-bottom: 16px;
+  display: none;
+  animation: fadeUp 0.3s ease;
+}
+.card.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--gris);
+}
+.card-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.card-icon.azul { background: #E8F0FB; }
+.card-icon.verde { background: var(--acento-claro); }
+.card-icon.naranja { background: #FFF0EA; }
+.card-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--azul); }
+.card-sub { font-size: 12px; color: var(--gris-texto); margin-top: 2px; }
+
+/* ── FIELDS ── */
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.field:last-child { margin-bottom: 0; }
+.field label { font-size: 12px; font-weight: 600; color: var(--azul); letter-spacing: 0.3px; }
+.field label .req { color: var(--acento-dark); }
+.field input, .field select, .field textarea {
+  border: 1.5px solid var(--gris-mid);
+  border-radius: 12px;
+  padding: 13px 15px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--dark);
+  background: var(--gris);
+  outline: none;
+  width: 100%;
+  -webkit-appearance: none;
+  transition: all 0.2s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--acento);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(0,200,150,0.12);
+}
+.field textarea { resize: vertical; min-height: 90px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* ── CHIPS ── */
+.chip-group { margin-bottom: 16px; }
+.chip-group > label { font-size: 12px; font-weight: 600; color: var(--azul); display: block; margin-bottom: 10px; }
+.chip-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 14px;
+  border: 1.5px solid var(--gris-mid);
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 13px; font-weight: 500;
+  color: var(--dark);
+  background: var(--gris);
+  transition: all 0.18s;
+  user-select: none;
+}
+.chip input { display: none; }
+.chip-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gris-mid); flex-shrink: 0; transition: background 0.18s; }
+.chip.selected { background: var(--azul); border-color: var(--azul); color: white; }
+.chip.selected.verde { background: var(--acento); border-color: var(--acento); }
+.chip.selected .chip-dot { background: rgba(255,255,255,0.5); }
+
+/* ── YES/NO ── */
+.yn-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  background: var(--gris);
+  border-radius: 12px;
+  padding: 13px 15px;
+  gap: 12px; margin-bottom: 10px;
+}
+.yn-label { font-size: 14px; font-weight: 500; color: var(--dark); flex: 1; line-height: 1.4; }
+.yn-btns { display: flex; gap: 6px; flex-shrink: 0; }
+.yn-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--gris-mid);
+  background: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; color: var(--gris-texto);
+  transition: all 0.18s;
+}
+.yn-btn.active-si { background: var(--acento); border-color: var(--acento); color: white; }
+.yn-btn.active-no { background: var(--azul); border-color: var(--azul); color: white; }
+
+/* ── INFO BOXES ── */
+.info-box {
+  border-radius: 12px; padding: 14px 16px;
+  margin-bottom: 16px; font-size: 13px; line-height: 1.55;
+}
+.info-box.verde { background: var(--acento-claro); border-left: 4px solid var(--acento); color: #065F46; }
+.info-box.azul { background: #E8F0FB; border-left: 4px solid var(--azul-mid); color: var(--azul); }
+.info-box.naranja { background: #FFF0EA; border-left: 4px solid var(--naranja); color: #7C2D12; }
+.info-box strong { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; }
+
+/* ── DESCUENTO BANNER ── */
+.descuento-banner {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-mid) 100%);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.descuento-banner::after {
+  content: '%';
+  position: absolute;
+  right: -10px; top: -20px;
+  font-family: 'Syne', sans-serif;
+  font-size: 120px; font-weight: 800;
+  color: rgba(255,255,255,0.06);
+  line-height: 1;
+}
+.descuento-banner .tag {
+  display: inline-block;
+  background: var(--naranja);
+  font-family: 'Syne', sans-serif;
+  font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 20px;
+  margin-bottom: 10px; letter-spacing: 0.5px;
+}
+.descuento-banner h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px; font-weight: 800;
+  margin-bottom: 6px;
+}
+.descuento-banner p { font-size: 13px; opacity: 0.85; line-height: 1.5; }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--gris-mid); margin: 18px 0; }
+.section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gris-texto); margin-bottom: 12px; }
+
+/* ── NAV ── */
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: white;
+  border-top: 1px solid var(--gris-mid);
+  padding: 12px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 100;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.08);
+  max-width: 640px; margin: 0 auto;
+}
+/* fix for mobile full width */
+@media (max-width: 640px) { .nav-bar { max-width: 100%; } }
+.nav-btn {
+  padding: 13px 24px; border-radius: 12px; border: none;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.nav-btn:active { transform: scale(0.97); }
+.btn-prev { background: var(--gris); color: var(--gris-texto); border: 1.5px solid var(--gris-mid); }
+.btn-next { background: var(--acento); color: white; min-width: 150px; box-shadow: 0 4px 16px rgba(0,200,150,0.35); }
+.btn-next.final { background: var(--naranja); box-shadow: 0 4px 16px rgba(255,107,53,0.35); }
+.step-counter { font-size: 12px; color: var(--gris-texto); font-weight: 500; }
+
+/* ── SUCCESS ── */
+.success-screen {
+  display: none; text-align: center;
+  padding: 60px 24px 100px;
+  animation: fadeUp 0.4s ease;
+}
+.success-screen.show { display: block; }
+.success-icon {
+  width: 90px; height: 90px;
+  background: var(--acento-claro);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; margin: 0 auto 24px;
+}
+.success-screen h2 { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--azul); margin-bottom: 10px; }
+.success-screen p { color: var(--gris-texto); font-size: 15px; line-height: 1.6; max-width: 380px; margin: 0 auto 28px; }
+.success-next {
+  background: var(--azul);
+  color: white; border: none;
+  padding: 15px 32px; border-radius: 14px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+  cursor: pointer; margin-bottom: 12px; display: block; width: 100%; max-width: 320px; margin: 0 auto 12px;
+}
+.success-reset {
+  background: transparent; color: var(--gris-texto);
+  border: 1.5px solid var(--gris-mid);
+  padding: 13px 32px; border-radius: 14px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+  cursor: pointer; display: block; width: 100%; max-width: 320px; margin: 0 auto;
+}
+
+/* ── STAFF BOX ── */
+.staff-box {
+  background: var(--azul);
+  border-radius: 14px; padding: 18px;
+}
+.staff-box .staff-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.55); margin-bottom: 14px; }
+.staff-box .field label { color: rgba(255,255,255,0.75); }
+.staff-box .field input, .staff-box .field select {
+  background: rgba(255,255,255,0.10) !important;
+  border-color: rgba(255,255,255,0.20) !important;
+  color: white !important;
+}
+.staff-box .field input::placeholder { color: rgba(255,255,255,0.35); }
+
+@media (max-width: 480px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .hero { padding: 32px 20px 50px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-logo">
+    <span>🏥 FisioSmart EC + Fitness Inc</span>
+  </div>
+  <h1>Tu salud merece<br><em>atención experta</em></h1>
+  <p>Hoy en tu empresa se habló de salud y bienestar. Si tienes alguna dolencia o quieres sentirte mejor, este es tu momento — con beneficios exclusivos para ti como colaborador.</p>
+  <div class="promo-badge">
+    🎁 Descuento especial + débito directo en tu rol de pagos
+  </div>
+</div>
+
+<div class="wave">
+  <svg viewBox="0 0 1440 40" preserveAspectRatio="none" height="40">
+    <path d="M0,40 C360,0 1080,0 1440,40 L1440,40 L0,40 Z" fill="#F5F7FA"/>
+  </svg>
+</div>
+
+<div class="main">
+
+<!-- PROGRESS -->
+<div class="progress-wrap" id="progress-wrap">
+  <div class="progress-label">
+    <span class="step-name" id="step-name">Tus datos</span>
+    <span id="step-fraction">Paso 1 de 4</span>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progress-fill" style="width:25%"></div>
+  </div>
+</div>
+
+<!-- STEP 0: DATOS PERSONALES -->
+<div class="card active" id="step-0">
+  <div class="card-header">
+    <div class="card-icon azul">👤</div>
+    <div><div class="card-title">Tus Datos</div><div class="card-sub">Para que podamos contactarte</div></div>
+  </div>
+  <div class="info-box verde">
+    <strong>¡Bienvenido/a!</strong>
+    Al registrarte hoy accedes a descuentos exclusivos en fisioterapia y gym, debitados directamente en tu rol de pagos. Tu empresa ya coordinó este beneficio para ti.
+  </div>
+  <div class="grid-2">
+    <div class="field"><label>Nombres <span class="req">*</span></label><input type="text" id="f-nombres" placeholder="Ej: Carlos" /></div>
+    <div class="field"><label>Apellidos <span class="req">*</span></label><input type="text" id="f-apellidos" placeholder="Ej: Pérez" /></div>
+  </div>
+  <div class="grid-2">
+    <div class="field"><label>Cédula <span class="req">*</span></label><input type="text" id="f-cedula" placeholder="09XXXXXXXX" /></div>
+    <div class="field"><label>Edad</label><input type="number" id="f-edad" placeholder="Ej: 38" min="18" max="70" /></div>
+  </div>
+  <div class="field"><label>Teléfono / WhatsApp <span class="req">*</span></label><input type="tel" id="f-telefono" placeholder="09XXXXXXXX" /></div>
+  <div class="field"><label>Correo electrónico</label><input type="email" id="f-email" placeholder="correo@empresa.com" /></div>
+</div>
+
+<!-- STEP 1: EMPRESA Y TRABAJO -->
+<div class="card" id="step-1">
+  <div class="card-header">
+    <div class="card-icon azul">🏢</div>
+    <div><div class="card-title">Tu Empresa y Trabajo</div><div class="card-sub">Nos ayuda a personalizar tu atención</div></div>
+  </div>
+
+  <div class="field"><label>Nombre de la empresa <span class="req">*</span></label><input type="text" id="f-empresa" placeholder="Ej: Corporación XYZ" /></div>
+  <div class="grid-2">
+    <div class="field"><label>Cargo / Puesto</label><input type="text" id="f-cargo" placeholder="Ej: Operador, Analista..." /></div>
+    <div class="field"><label>Años en la empresa</label>
+      <select id="f-antiguedad">
+        <option value="">Selecciona...</option>
+        <option>Menos de 1 año</option>
+        <option>1 a 3 años</option>
+        <option>3 a 5 años</option>
+        <option>Más de 5 años</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="chip-group">
+    <label>Tipo de trabajo que realizas <span class="req">*</span></label>
+    <div class="chip-options">
+      <label class="chip"><input type="radio" name="tipo-trabajo"><span class="chip-dot"></span>🖥️ Oficina / escritorio</label>
+      <label class="chip"><input type="radio" name="tipo-trabajo"><span class="chip-dot"></span>🏭 Trabajo físico / producción</label>
+      <label class="chip"><input type="radio" name="tipo-trabajo"><span class="chip-dot"></span>🚛 Conducción / transporte</label>
+      <label class="chip"><input type="radio" name="tipo-trabajo"><span class="chip-dot"></span>🏗️ Construcción / campo</label>
+      <label class="chip"><input type="radio" name="tipo-trabajo"><span class="chip-dot"></span>🏥 Salud / atención a personas</label>
+      <label class="chip"><input type="radio" name="tipo-trabajo"><span class="chip-dot"></span>📦 Carga y logística</label>
+      <label class="chip"><input type="radio" name="tipo-trabajo"><span class="chip-dot"></span>+ Otro</label>
+    </div>
+  </div>
+
+  <div class="chip-group">
+    <label>Postura predominante en tu trabajo</label>
+    <div class="chip-options">
+      <label class="chip"><input type="radio" name="postura"><span class="chip-dot"></span>Sentado la mayor parte</label>
+      <label class="chip"><input type="radio" name="postura"><span class="chip-dot"></span>De pie la mayor parte</label>
+      <label class="chip"><input type="radio" name="postura"><span class="chip-dot"></span>Combinado</label>
+      <label class="chip"><input type="radio" name="postura"><span class="chip-dot"></span>Movimiento constante</label>
+    </div>
+  </div>
+
+  <div class="yn-row">
+    <span class="yn-label">¿Tu empleador ya te confirmó el beneficio de descuento?</span>
+    <div class="yn-btns">
+      <button class="yn-btn" onclick="toggleYN(this,'si')">Sí</button>
+      <button class="yn-btn" onclick="toggleYN(this,'no')">No</button>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2: DOLENCIAS -->
+<div class="card" id="step-2">
+  <div class="card-header">
+    <div class="card-icon naranja">🩺</div>
+    <div><div class="card-title">Tu Condición de Salud</div><div class="card-sub">Para orientarte al servicio correcto</div></div>
+  </div>
+
+  <div class="info-box azul">
+    <strong>Tu información es confidencial.</strong>
+    Solo la usaremos para conectarte con el especialista adecuado. No se comparte con tu empleador.
+  </div>
+
+  <div class="chip-group">
+    <label>¿Qué tipo de molestia o dolencia tienes actualmente? <span class="req">*</span></label>
+    <div class="chip-options">
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>🔙 Dolor de espalda / lumbar</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>🦴 Cuello / cervical</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>💪 Hombro / manguito</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>🦵 Rodilla / menisco</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>🦶 Pie / tobillo</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>✋ Muñeca / túnel carpiano</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>❤️ Cardiovascular / presión</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>⚖️ Sobrepeso / sedentarismo</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>🤕 Recuperación de accidente / cirugía</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>😴 Fatiga / estrés crónico</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>+ Otra</label>
+    </div>
+  </div>
+
+  <div class="field"><label>Describe tu molestia con tus propias palabras</label>
+    <textarea id="f-descripcion-dolencia" placeholder="Ej: Llevo 3 meses con dolor en la espalda baja, especialmente al sentarme por mucho tiempo..."></textarea>
+  </div>
+
+  <div class="chip-group">
+    <label>¿Hace cuánto tiempo tienes esta molestia?</label>
+    <div class="chip-options">
+      <label class="chip"><input type="radio" name="tiempo-dolencia"><span class="chip-dot"></span>Menos de 1 mes</label>
+      <label class="chip"><input type="radio" name="tiempo-dolencia"><span class="chip-dot"></span>1 a 3 meses</label>
+      <label class="chip"><input type="radio" name="tiempo-dolencia"><span class="chip-dot"></span>3 a 6 meses</label>
+      <label class="chip"><input type="radio" name="tiempo-dolencia"><span class="chip-dot"></span>Más de 6 meses</label>
+      <label class="chip"><input type="radio" name="tiempo-dolencia"><span class="chip-dot"></span>Es crónico / años</label>
+    </div>
+  </div>
+
+  <div class="yn-row">
+    <span class="yn-label">¿Ya recibiste atención médica o fisioterapia por esta molestia?</span>
+    <div class="yn-btns">
+      <button class="yn-btn" onclick="toggleYN(this,'si')">Sí</button>
+      <button class="yn-btn" onclick="toggleYN(this,'no')">No</button>
+    </div>
+  </div>
+  <div class="field" style="margin-top:4px">
+    <input type="text" id="f-atencion-previa" placeholder="Si respondió Sí: ¿qué tratamiento recibiste?" />
+  </div>
+
+  <div class="yn-row">
+    <span class="yn-label">¿La molestia afecta tu desempeño en el trabajo?</span>
+    <div class="yn-btns">
+      <button class="yn-btn" onclick="toggleYN(this,'si')">Sí</button>
+      <button class="yn-btn" onclick="toggleYN(this,'no')">No</button>
+    </div>
+  </div>
+
+  <div class="chip-group" style="margin-top:6px">
+    <label>¿Qué servicio te interesa? <span class="req">*</span></label>
+    <div class="chip-options">
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>🩹 Fisioterapia / rehabilitación</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>💪 Gym / acondicionamiento</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>❤️ Consulta médica</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>⭐ Quiero saber todas las opciones</label>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3: CONFIRMACIÓN Y DESCUENTO -->
+<div class="card" id="step-3">
+  <div class="card-header">
+    <div class="card-icon verde">✅</div>
+    <div><div class="card-title">Confirma y Recibe tu Descuento</div><div class="card-sub">Último paso</div></div>
+  </div>
+
+  <div class="descuento-banner">
+    <div class="tag">🎁 BENEFICIO EXCLUSIVO</div>
+    <h3>Descuento especial para colaboradores</h3>
+    <p>Al registrarte hoy, tu tratamiento o membresía tiene un descuento preferencial y se debita directamente en tu rol de pagos — sin salir de tu bolsillo el primer mes.</p>
+  </div>
+
+  <div class="chip-group">
+    <label>¿Cuándo prefieres que te contactemos?</label>
+    <div class="chip-options">
+      <label class="chip"><input type="radio" name="contacto-hora"><span class="chip-dot"></span>🌅 Mañana (8h–12h)</label>
+      <label class="chip"><input type="radio" name="contacto-hora"><span class="chip-dot"></span>☀️ Tarde (12h–17h)</label>
+      <label class="chip"><input type="radio" name="contacto-hora"><span class="chip-dot"></span>🌙 Noche (17h–20h)</label>
+      <label class="chip"><input type="radio" name="contacto-hora"><span class="chip-dot"></span>Cualquier hora</label>
+    </div>
+  </div>
+
+  <div class="chip-group">
+    <label>Canal de contacto preferido</label>
+    <div class="chip-options">
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>💬 WhatsApp</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>📞 Llamada</label>
+      <label class="chip verde"><input type="checkbox"><span class="chip-dot"></span>📧 Email</label>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>¿Algo más que quieras que sepamos?</label>
+    <textarea id="f-notas" placeholder="Comentarios adicionales, preguntas, restricciones de horario..."></textarea>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="yn-row">
+    <span class="yn-label">Acepto que mis datos sean usados para contactarme con una propuesta de servicio</span>
+    <div class="yn-btns">
+      <button class="yn-btn" onclick="toggleYN(this,'si')">Sí</button>
+      <button class="yn-btn" onclick="toggleYN(this,'no')">No</button>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Nombre completo (confirmar) <span class="req">*</span></label>
+    <input type="text" id="f-nombre-confirmacion" placeholder="Nombres y apellidos" />
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Staff -->
+  <div class="staff-box">
+    <div class="staff-title">⚙️ Uso interno — Especialista en salud ocupacional</div>
+    <div class="grid-2">
+      <div class="field"><label>Nombre del especialista</label><input type="text" id="f-especialista" placeholder="Quien tomó esta ficha" /></div>
+      <div class="field"><label>Empresa donde se dio la charla</label><input type="text" id="f-empresa-charla" placeholder="Nombre de la empresa" /></div>
+    </div>
+    <div class="field"><label>Observaciones del especialista</label>
+      <input type="text" id="f-obs-especialista" placeholder="Notas para FisioSmart / Fitness Inc..." style="background:rgba(255,255,255,0.10)!important;border-color:rgba(255,255,255,0.20)!important;color:white!important;" />
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-screen" id="success">
+  <div class="success-icon">🎉</div>
+  <h2>¡Registro exitoso!</h2>
+  <p>Tu información fue enviada. Un especialista de FisioSmart EC se contactará contigo pronto con tu propuesta personalizada y los detalles del beneficio de descuento.</p>
+  <button class="success-reset" onclick="resetForm()">Registrar otra persona</button>
+</div>
+
+</div><!-- /main -->
+
+<!-- NAV BAR -->
+<div class="nav-bar" id="nav-bar">
+  <button class="nav-btn btn-prev" id="btn-prev" onclick="prevStep()">← Atrás</button>
+  <span class="step-counter" id="step-counter">1 de 4</span>
+  <button class="nav-btn btn-next" id="btn-next" onclick="nextStep()">Continuar →</button>
+</div>
+
+<script>
+  // ── CONFIG ──────────────────────────────────────────────
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-kv6UBw9xvxZWDmipTeZ0slA9xxxO7__qswUzzYAHGD9jSqXaGN-xmkPtWs0KX8_9TA/exec";
+  const TOTAL_STEPS = 4;
+  const STEP_NAMES = ["Tus datos", "Tu empresa", "Tu salud", "Confirmar"];
+
+  let currentStep = 0;
+
+  // ── CHIPS ────────────────────────────────────────────────
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', e => {
+      e.preventDefault();
+      const input = chip.querySelector('input');
+      if (input.type === 'radio') {
+        document.querySelectorAll(`input[name="${input.name}"]`).forEach(r => {
+          r.closest('.chip').classList.remove('selected');
+        });
+        chip.classList.add('selected');
+        input.checked = true;
+      } else {
+        chip.classList.toggle('selected');
+        input.checked = chip.classList.contains('selected');
+      }
+    });
+  });
+
+  // ── YES/NO ───────────────────────────────────────────────
+  function toggleYN(btn, val) {
+    const row = btn.closest('.yn-btns');
+    row.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('active-si','active-no'));
+    btn.classList.add(val === 'si' ? 'active-si' : 'active-no');
+  }
+
+  // ── HELPERS ──────────────────────────────────────────────
+  function fid(id) { const e = document.getElementById(id); return e ? e.value.trim() : ""; }
+
+  function getRadio(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.closest('.chip').textContent.trim() : "";
+  }
+
+  function getCheckboxes(groupIndex) {
+    const groups = document.querySelectorAll('.chip-options');
+    if (!groups[groupIndex]) return "";
+    return Array.from(groups[groupIndex].querySelectorAll('.chip.selected'))
+      .map(c => c.textContent.trim()).join(", ");
+  }
+
+  function getYNByIndex(index) {
+    const rows = document.querySelectorAll('.yn-row');
+    if (!rows[index]) return "";
+    const active = rows[index].querySelector('.yn-btn.active-si, .yn-btn.active-no');
+    return active ? active.textContent.trim() : "";
+  }
+
+  // ── COLLECT DATA ─────────────────────────────────────────
+  function collectData() {
+    return {
+      nombres:              fid("f-nombres"),
+      apellidos:            fid("f-apellidos"),
+      cedula:               fid("f-cedula"),
+      edad:                 fid("f-edad"),
+      telefono:             fid("f-telefono"),
+      email:                fid("f-email"),
+      empresa:              fid("f-empresa"),
+      cargo:                fid("f-cargo"),
+      antiguedad:           fid("f-antiguedad"),
+      tipo_trabajo:         getRadio("tipo-trabajo"),
+      postura:              getRadio("postura"),
+      patrono_confirmo:     getYNByIndex(0),
+      dolencias:            getCheckboxes(2),
+      descripcion_dolencia: fid("f-descripcion-dolencia"),
+      tiempo_dolencia:      getRadio("tiempo-dolencia"),
+      atencion_previa:      getYNByIndex(1),
+      detalle_atencion:     fid("f-atencion-previa"),
+      afecta_trabajo:       getYNByIndex(2),
+      servicio_interes:     getCheckboxes(3),
+      horario_contacto:     getRadio("contacto-hora"),
+      canal_contacto:       getCheckboxes(4),
+      notas:                fid("f-notas"),
+      acepta_terminos:      getYNByIndex(3),
+      nombre_confirmacion:  fid("f-nombre-confirmacion"),
+      especialista:         fid("f-especialista"),
+      empresa_charla:       fid("f-empresa-charla"),
+      obs_especialista:     fid("f-obs-especialista"),
+    };
+  }
+
+  // ── NAVIGATION ───────────────────────────────────────────
+  function goTo(step) {
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+    document.getElementById('step-' + step).classList.add('active');
+    currentStep = step;
+    updateNav();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function nextStep() {
+    if (currentStep < TOTAL_STEPS - 1) {
+      goTo(currentStep + 1);
+    } else {
+      submitForm();
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 0) goTo(currentStep - 1);
+  }
+
+  function updateNav() {
+    const prev = document.getElementById('btn-prev');
+    const next = document.getElementById('btn-next');
+    const counter = document.getElementById('step-counter');
+    const fill = document.getElementById('progress-fill');
+    const stepName = document.getElementById('step-name');
+    const stepFraction = document.getElementById('step-fraction');
+
+    prev.style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+    counter.textContent = `${currentStep + 1} de ${TOTAL_STEPS}`;
+    fill.style.width = ((currentStep + 1) / TOTAL_STEPS * 100) + '%';
+    stepName.textContent = STEP_NAMES[currentStep];
+    stepFraction.textContent = `Paso ${currentStep + 1} de ${TOTAL_STEPS}`;
+
+    if (currentStep === TOTAL_STEPS - 1) {
+      next.textContent = '🎁 Enviar y recibir descuento';
+      next.classList.add('final');
+    } else {
+      next.textContent = 'Continuar →';
+      next.classList.remove('final');
+    }
+  }
+
+  // ── SUBMIT ───────────────────────────────────────────────
+  function submitForm() {
+    const btn = document.getElementById('btn-next');
+    const data = collectData();
+
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbx-kv6UBw9xvxZWDmipTeZ0slA9xxxO7__qswUzzYAHGD9jSqXaGN-xmkPtWs0KX8_9TA/exec") {
+      console.log("Demo mode:", data);
+      showSuccess();
+      return;
+    }
+
+    btn.textContent = '⏳ Enviando...';
+    btn.disabled = true;
+
+    // Construir URL con parámetros GET
+    const params = new URLSearchParams();
+    Object.keys(data).forEach(k => { if (data[k]) params.append(k, data[k]); });
+    const url = APPS_SCRIPT_URL + '?' + params.toString();
+
+    // Enviar con imagen — funciona desde cualquier origen sin CORS
+    const img = new Image();
+    img.onload = img.onerror = function() {
+      btn.disabled = false;
+      showSuccess();
+    };
+    // Timeout de seguridad
+    setTimeout(() => {
+      if (btn.disabled) {
+        btn.disabled = false;
+        showSuccess();
+      }
+    }, 6000);
+    img.src = url;
+  }
+
+  function showSuccess() {
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+    document.getElementById('success').classList.add('show');
+    document.getElementById('nav-bar').style.display = 'none';
+    document.getElementById('progress-wrap').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetForm() {
+    document.getElementById('success').classList.remove('show');
+    document.getElementById('nav-bar').style.display = '';
+    document.getElementById('progress-wrap').style.display = '';
+    document.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]), select, textarea')
+      .forEach(el => el.value = '');
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('active-si','active-no'));
+    goTo(0);
+  }
+
+  updateNav();
+</script>
+</body>
+</html>
